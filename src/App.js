@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import Footer from './components/layout/Footer';
+import Header from './components/layout/Header';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Toaster } from 'react-hot-toast';
+import useUserRoutes from "./components/routes/userRoutes";
+import useAdminRoutes from "./components/routes/adminRoutes"
+import NotFound from './components/layout/NotFound';
 
 function App() {
+
+  const userRoutes = useUserRoutes();
+  const adminRoutes = useAdminRoutes();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+
+        <Toaster />
+        <Header />
+
+        <div className='container'>
+          <Routes>
+
+            {userRoutes}
+            {adminRoutes}
+
+            <Route path='*' element={<NotFound />}></Route>
+
+          </Routes>
+        </div>
+
+        <Footer />
+
+      </div>
+    </Router>
   );
 }
 
